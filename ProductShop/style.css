@@ -1,0 +1,57 @@
+.center
+{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#showB{
+    padding: 15px 60px;
+    font-size: 14px;
+}
+
+h1{
+    text-align: center;
+}
+h2{
+    font-size: 14px;
+}
+table, th, tr
+{    
+    text-align: center;
+    border: 1px solid;
+    width: 80%;
+    table-layout: fixed;
+
+}
+body
+{
+    text-align: center;
+
+    
+}
+#formAddN{
+    
+    display: none;
+    font-size: 12px;
+    padding: 4px 2px;
+    border:solid 1px #aacfe4;
+    width: 95%;
+
+}
+#formEdit{
+    
+    display: none;
+    font-size: 12px;
+    padding: 4px 2px;
+    border:solid 1px #aacfe4;
+    width: 95%;
+
+}
+#shn{
+    padding: 15px 15px;
+    font-size: 14px;
+}
+/* #formAddN
+{
+    text-align: center;
+} */

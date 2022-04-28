@@ -1,0 +1,55 @@
+.center
+{
+    margin-left: auto;
+    margin-right: auto;
+}
+table, th, tr
+{    
+    text-align: center;
+    border: 1px solid;
+    width: 80%;
+    table-layout: fixed;
+
+}
+body
+{
+    text-align: center;
+
+    
+}
+#Orders
+{
+  /*  display: block;*/
+      display:table;
+    text-align: center;
+    border: 1px solid;
+    width: 80%;
+    /*table-layout: fixed;*/
+}
+#formNewOrder
+{
+    display: none;
+    text-align: center;
+    border: 1px solid;
+    width: 90%;
+    table-layout: fixed;
+}
+#showDetails
+{
+    text-align: center;
+    border: 1px solid;
+    width: 90%;
+    table-layout: fixed;
+}
+#shn{
+    padding: 15px 15px;
+    font-size: 14px;
+}
+#formEditOrder
+{
+   /* display: none;*/
+    text-align: center;
+    border: 1px solid;
+    width: 90%;
+    table-layout: fixed;
+}

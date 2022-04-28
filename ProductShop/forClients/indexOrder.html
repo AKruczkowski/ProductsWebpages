@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<head>
+    <link rel = "stylesheet" href = "shopStyle.css">
+    <script src = "https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src = "OrdersJs.js"></script>
+<h1>Shop</h1>
+</head>
+<body onload="GetOrdData(),GetProdData()">
+
+   
+    <h2>                </h2>
+    <form action=""></form>
+    <h2>              </h2>
+    <table id = "Orders" align="center" >
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Address</th>
+                <th></th>
+                
+            </tr>
+        </thead>
+        <tbody id="tbnbody"></tbody>
+    </table>
+    <h2>  </h2>
+
+
+    <button id="shn" onclick = "ShowHideN()">New Order</button>
+    <h2>  </h2>
+        <form id="formNewOrder">
+            <h2>  </h2>
+            <label for "Products">Choose a Product:</label>
+            <select name = "products" id = "prodList">
+            </select>
+            <input type="text" id="add-quantity" placeholder="Quantity">
+            <input type="text" id="add-address" placeholder="Address">
+
+            <button id="Order" onclick = "CreateNewOrder()">Submit</button>
+
+            <h2>  </h2>
+           
+        </form>
+
+
+
+        <h2>  </h2>
+        <form id="formEditOrder">
+            <table id = "currentOrder" align="center" >
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th> 
+                    </tr>
+                </thead>
+                <tbody id="edittbbody"></tbody>
+            </table>
+
+            <button id="save" onclick = "CollectAllDetails()">Save changes</button>
+            <!-- <h2>  </h2>
+            <label >Your product: </label>
+            <label id = ""></label>
+            <input type="text" id="add-quantity" placeholder="Quantity">
+            <button id="EditOrder" onclick = "">Add</button>
+            <h2>  </h2> -->
+        </form>
+
+<!--     
+    <table id = "Products" align="center" >
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="tblbody"></tbody>
+    </table> -->
+<!--    
+    <form id="formNewOrder" action="javascript:void(0);" method="POST" onsubmit="buyItem()">
+        <table id = "Order" align="center" >
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Buy</th>
+                </tr>
+            </thead>
+            <tbody id="tablewithp"></tbody>
+            <h3>  </h3>
+        <input type="text" id="add-quantity" placeholder="Quantity">
+    </form>
+    <form>
+    <h3>
+        Your order:
+    </h3>
+    <table id = "showDetails" action="javascript:void(0);" method="GET" onload="showDetails()">
+        <tr>
+            <th>Product</th>
+            <th>ID</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+    </table>
+</form>-->
+
+</body>
