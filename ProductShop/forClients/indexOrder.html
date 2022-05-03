@@ -26,12 +26,19 @@
 
 
     <button id="shn" onclick = "ShowHideN()">New Order</button>
+
     <h2>  </h2>
+        <h2>  </h2>
+    </form>
+
+
+
         <form id="formNewOrder">
             <h2>  </h2>
-            <label for "Products">Choose a Product:</label>
+            <label for "Products">Choose a product:</label>
             <select name = "products" id = "prodList">
             </select>
+
             <input type="text" id="add-quantity" placeholder="Quantity">
             <input type="text" id="add-address" placeholder="Address">
 
@@ -41,14 +48,12 @@
            
         </form>
 
-
-
         <h2>  </h2>
-        <form id="formEditOrder">
+        <form id="formEditOrder" onsubmit="">
             <table id = "currentOrder" align="center" >
                 <thead>
                     <tr>
-                        <th>Product</th>
+                        <th>Product_ID</th>
                         <th>Quantity</th>
                         <th>Price</th> 
                     </tr>
@@ -57,50 +62,29 @@
             </table>
 
             <button id="save" onclick = "CollectAllDetails()">Save changes</button>
-            <!-- <h2>  </h2>
-            <label >Your product: </label>
-            <label id = ""></label>
-            <input type="text" id="add-quantity" placeholder="Quantity">
-            <button id="EditOrder" onclick = "">Add</button>
-            <h2>  </h2> -->
+            <button type="button" id="saveNewProduct" onclick = "newProductForm()">Add product</button>
+
         </form>
 
-<!--     
-    <table id = "Products" align="center" >
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Price</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody id="tblbody"></tbody>
-    </table> -->
-<!--    
-    <form id="formNewOrder" action="javascript:void(0);" method="POST" onsubmit="buyItem()">
-        <table id = "Order" align="center" >
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Buy</th>
-                </tr>
-            </thead>
-            <tbody id="tablewithp"></tbody>
-            <h3>  </h3>
-        <input type="text" id="add-quantity" placeholder="Quantity">
+
+   <form id="AddressCh" onsubmit="">
+    <label>New address</label>
+    <input type="text" id="addressChange" placeholder="Address">
+    <button id="newAddressSave" onclick="fetchEditedAddress()">Save</button>
+   </form>
+
+   <h2>   </h2>
+   <h2>   </h2>
+
+   <form id="RandomName">
+    <h2>  </h2>
+    <label for "NewProducts">Choose a product:</label>
+    <select name = "productsl" id = "prodListN" onload="LoadProductsForNewDetail()">
+    </select>
+    <input type="text" id="add-quantityN" placeholder="Quantity">
+
+    <button id="Ordern" onclick = "fetchDetail()">Add</button>
+    <h2>  </h2>
     </form>
-    <form>
-    <h3>
-        Your order:
-    </h3>
-    <table id = "showDetails" action="javascript:void(0);" method="GET" onload="showDetails()">
-        <tr>
-            <th>Product</th>
-            <th>ID</th>
-            <th>Quantity</th>
-            <th>Price</th>
-        </tr>
-    </table>
-</form>-->
 
 </body>

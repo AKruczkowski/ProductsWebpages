@@ -53,3 +53,19 @@ body
     width: 90%;
     table-layout: fixed;
 }
+#AddressCh
+{
+       display: none;
+       text-align: center;
+       border: 1px solid;
+       width: 90%;
+       table-layout: fixed;
+}
+#RandomName
+{
+    display: none;
+    text-align: center;
+    border: 1px solid;
+    width: 90%;
+    table-layout: fixed;
+}
