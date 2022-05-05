@@ -5,7 +5,7 @@ var uri = "http://localhost:50586/api/Products";
  function GetBindData() //async
 {
   //let response =
-    fetch("http://localhost:50586/api/Products", { //await
+    fetch("http://localhost:50586/api/Products/GetProducts", { //await
       method:'GET',
   mode: 'cors',
   dataType: 'json',
@@ -55,7 +55,7 @@ function BindDataToTable(data)
 
 function deleteItem(id)
 {
-  fetch(uri+'/' +id,{
+  fetch(uri+'/RemoveProduct?id=' +id,{
     method:"DELETE",
     mode: 'cors',
     dataType: 'json',
@@ -83,7 +83,7 @@ function addItem() {
     Length: addLengthTextbox.val()
    };
  
-   fetch("http://localhost:50586/api/Products", {
+   fetch("http://localhost:50586/api/Products/AddProduct", {
      method: 'POST',
      mode: 'cors',
      headers: {
@@ -128,7 +128,7 @@ function updateItem() //id
    Length: addLengthTextbox.val()
   };
 
-  fetch(uri+'/' +newID,{
+  fetch(uri+'/EditProduct?id=' +newID,{
     method: "PUT",
     mode: "cors",
     headers: {
@@ -138,7 +138,7 @@ function updateItem() //id
   })
   //.then()
   .then(response => response.json())
-  .then(window.location.reload())
+  //.then(window.location.reload())
   .catch(error => console.error('Unable to update item.', error));
 
 }

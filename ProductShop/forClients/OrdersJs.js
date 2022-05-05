@@ -6,10 +6,12 @@
 const uri = "http://localhost:50586/api/Order";
 var temp = 0;
 var nrofProd = 1;
+const delay =ms => new Promise(res => setTimeout(res,ms));
 //////////////////////////////////////////////
 function GetOrdData() //async     // Get Orders
 {
-    fetch("http://localhost:50586/api/Order/GetOrders", { //await
+  $("#Orders tr").remove();  
+    fetch(uri + "/GetOrders", { //await
       method:'GET',
   mode: 'cors',
   dataType: 'json',
@@ -36,7 +38,9 @@ function GetOrdData() //async     // Get Orders
               //  "<button id = '" + data[i].Order_ID + "' onclick = 'deleteItem(id)'> Delete"+"</td>"
               // +"</td>"
                //+"<td>"
-               +   "<button id = '" + data[i].Order_ID + "' onclick = 'ShowAddressEdit(id)'> Edit address" +"</td>"
+               +   "<button id = '" + data[i].Order_ID + "' onclick = 'ShowAddressEdit(id)'> Edit address"
+               +"<button id = '" + data[i].Order_ID + "' onclick = 'deleteItem(id)'> Delete"                //changed here!
+               +"</td>"
               + "</tr>";
               
               $("#tbnbody").append(tablerow);         
@@ -65,11 +69,12 @@ function ShowHideN()  //shows new form for the new order
 function ShowHideEdit(id)  //shows new form for the new order
 {
   var x = document.getElementById("formEditOrder");
+  x.reset();
   if(x.style.display === "none")
   {
-    x.style.display = "block";
+    x.style.display = "block";                                                                          //  HERE
 
-        fetch("http://localhost:50586/api/Order/GetOrderDetails/" + id, { //await
+        fetch(uri +"/GetOrderDetails/" + id, { //await
         method:'GET',
       mode: 'cors',
       dataType: 'json',
@@ -90,13 +95,14 @@ function ShowHideEdit(id)  //shows new form for the new order
 //////////////////////////////////////////////
 function displayCurrentOrder(data) 
 {
+  $("#edittbbody tr").remove();  
   for(var i =0; i < data.length;i++)
   {
      var tablerow = "<tr>"
             +  "<td>" + data[i].Product_ID +"</td>"
             +"<td contenteditable>" + data[i].Quantity +"</td>"
             + "<td>"+ data[i].Price +"</td>"
-            //+"<td>"+ "<button id = '" + data[i].Product_ID + "' onclick = ''> Edit" + "</td>"
+            +"<td>"+ "<button id = '" + data[i].OrderDetail_ID+ "' type='button' onclick = 'DeleteDetail(id)'> Remove" + "</td>"
            //  +
            //  "<button id = '" + data[i].Order_ID + "' onclick = 'deleteItem(id)'> Delete"+"</td>"
                      +//"<td>"+  "<input type='text' id='" + data[i].Product_ID +"' placeholder='"+data[i].Quantity+"'>"+ "</input>" +"</td>"   
@@ -113,7 +119,7 @@ function CollectAllDetails() //collects all details in given order and pushes th
   var ndata = [];
 
   var headers = [];
-  for(var i =0; i<table.rows[0].cells.length;i++)
+  for(var i =0; i<table.rows[0].cells.length-1;i++)
     {
       headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/ /gi,'');
     }
@@ -122,7 +128,7 @@ function CollectAllDetails() //collects all details in given order and pushes th
       var tableRow = table.rows[i];
       var rowData = {};
       //console.log(tableRow.cells.length);
-      for(var j =0;j<tableRow.cells.length;j++)
+      for(var j =0;j<tableRow.cells.length-1;j++) //-1
       {
         rowData[headers[j]] = tableRow.cells[j].innerHTML;
         console.log(rowData);
@@ -140,7 +146,7 @@ function fetchEditedOrder(ndata) //fetch data from CollectAllDetails table
     OrdernDetails:ndata
   }
 
-  fetch("http://localhost:50586/api/Order/EditOrder/"+temp,{
+  fetch(uri + "/EditOrder/"+temp,{
     method:"POST",
     mode: 'cors',
     dataType: 'json',
@@ -149,7 +155,8 @@ function fetchEditedOrder(ndata) //fetch data from CollectAllDetails table
     body: JSON.stringify(newItem)
   })
   .then(response => response.json()) 
-  .then(window.location.reload()) // window.location.reload()
+  .then(reloadDiv())
+ // .then(window.location.reload()) // window.location.reload()
   .catch(error => console.error('Unable to create order', error));
 }
 
@@ -157,7 +164,7 @@ function fetchEditedOrder(ndata) //fetch data from CollectAllDetails table
  function GetProdData() //async   // get products and put them into the list
  {
    //let response =
-     fetch("http://localhost:50586/api/Products", { //await
+     fetch("http://localhost:50586/api/Products/GetProducts", { //await
        method:'GET',
    mode: 'cors',
    dataType: 'json',
@@ -185,15 +192,25 @@ function fetchEditedOrder(ndata) //fetch data from CollectAllDetails table
 
  function deleteItem(id)
 {
-  fetch(uri+'/DeleteOrder/' +id,{
-    method:"DELETE",
+  //debugger
+  fetch(uri+'/DeleteOrders/' +id,{
+    method:"POST",
     mode: 'cors',
     dataType: 'json',
     headers :
     {'Content-type' : 'application/json'}
   })
-  //.then( window.location.reload())
-  .catch(error => console.error('Unable to delete item', error));
+  .then(GetProdData())
+  //.then(reloadDiv())
+  .catch(error => console.error('Unable to delete item', error))
+  .then(window.onerror = reloadPg());
+  // .then(  delay(2500),
+  // GetProdData(),
+  // reloadDiv());
+
+  // delay(2500);
+  // GetProdData();
+  // reloadDiv();
 }
 //////////////////////////////////////////////
 function CreateNewOrder()
@@ -210,7 +227,7 @@ function CreateNewOrder()
         OrdernDetails:[{Product_ID:n,Quantity:addQuantityTextbox.val()}]
       };
 
-  fetch("http://localhost:50586/api/Order/AddOrder",{
+  fetch(uri + "/AddOrder",{
     method:"POST",
     mode: 'cors',
     dataType: 'json',
@@ -218,8 +235,14 @@ function CreateNewOrder()
     {'Content-type' : 'application/json'},
     body: JSON.stringify(newItem)
   })
-  .then(response => response.json())   // window.location.reload()
+  .then(response => response.json())
+  .then(window.location.reload())
+  //.then($("#ordInfo").load(window.location.href+"#ordInfo"))  // window.location.reload()
   .catch(error => console.error('Unable to create order', error));
+
+   delay(500);
+  GetOrdData();
+
 }
 
 function createInputList(data)
@@ -277,7 +300,7 @@ function ShowAddressEdit(id)
     }
     //console.log(addAddressTextbox.val());
     console.log(addAddressTextbox.value);
-    fetch("http://localhost:50586/api/Order/EditOrderNew/"+temp,{
+    fetch(uri + "/EditOrderNew/"+temp,{
       method:"POST",
       mode: 'cors',
       dataType: 'json',
@@ -344,7 +367,7 @@ function fetchDetail()
      Quantity:addQuantityTextbox.val()
       };
 if(temp != 0 && temp != null)
-  fetch("http://localhost:50586/api/Order/AddOrderDetail/"+temp,{
+  fetch(uri+"/AddOrderDetail/"+temp,{
     method:"POST",
     mode: 'cors',
     dataType: 'json',
@@ -352,52 +375,55 @@ if(temp != 0 && temp != null)
     {'Content-type' : 'application/json'},
     body: JSON.stringify(newItem)
   })
-  .then(response => response.json())   // window.location.reload()
-  .catch(error => console.error('Unable to create order', error));
+  .then(response => response.json())
+  .then(reloadDiv())   // window.location.reload()
+  .catch(error => console.error('Unable to create order', error))
+  .then(window.onerror = reloadDiv());
 
   
 }
 
+function reloadDiv()
+{
+  $("#formEditOrder").load(window.location.href+"#formEditOrder") 
+}
+
+function reloadPg()
+{
+  location.reload();
+}
 
 
+function DeleteDetail(id)
+{
+  fetch(uri+'/DeleteOrderDetail/' +id,{
+    method:"POST",
+    mode: 'cors',
+    dataType: 'json',
+    headers :
+    {'Content-type' : 'application/json'}
+  })
+ // .then(GetProdData())
+ // .then(reloadDiv())
+  .catch(error => console.error('Unable to delete item', error))
+  //.then(window.onerror = reloadDiv())
+  .then(window.onerror = reloadPg());
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
+function getDetails()
+{
+  // fetch(uri +"/GetOrderDetails/" + id, { //await
+  //   method:'GET',
+  // mode: 'cors',
+  // dataType: 'json',
+  // headers :
+  // {'Content-type' : 'application/json'}
+  // })
+  // .then(response => {return response.json()})
+  // //.then(data => {console.log(data);return data})
+  // .then(data => {console.log(data);displayCurrentOrder(data)})
+  // .catch((error)=> console.error(error))
+}
 /////////////////////////////////////////////////////////////////////////////////
-//   function ShowHideNew(id)
-// {
-//       // var x = document.getElementById("formNewOrder");
-//       // if(x.style.display === "none")
-//       // {
-//       //   x.style.display = "block";
 
-//       // } else
-//       // {
-//       //  // x.style.display = "none"
-//       // }
-//     var data = fetch("http://localhost:50586/api/Products/" + id, { //await
-//       method:'GET',
-//     mode: 'cors',
-//     dataType: 'json',
-//     headers :
-//     {'Content-type' : 'application/json'}
-//     })
-//     .then(response => {return response.json()})
-//     //.then(data => {console.log(data);return data})
-//     .then(data => {console.log(data);ShowProd(data)})
-//       .catch((error)=> console.error(error));
-//       //console.log(id);
-//       temp = id;
-//       //console.log(temp);
-// }
 /////////////////////////////////////////////////////////////////////////////////////

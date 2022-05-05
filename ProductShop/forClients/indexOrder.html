@@ -9,7 +9,7 @@
 
    
     <h2>                </h2>
-    <form action=""></form>
+    <form id="ordInfo" action=""></form>
     <h2>              </h2>
     <table id = "Orders" align="center" >
         <thead>
@@ -33,7 +33,7 @@
 
 
 
-        <form id="formNewOrder">
+        <div id="formNewOrder">
             <h2>  </h2>
             <label for "Products">Choose a product:</label>
             <select name = "products" id = "prodList">
@@ -46,7 +46,7 @@
 
             <h2>  </h2>
            
-        </form>
+        </div>
 
         <h2>  </h2>
         <form id="formEditOrder" onsubmit="">
@@ -56,6 +56,7 @@
                         <th>Product_ID</th>
                         <th>Quantity</th>
                         <th>Price</th> 
+                        <th></th> 
                     </tr>
                 </thead>
                 <tbody id="edittbbody"></tbody>
