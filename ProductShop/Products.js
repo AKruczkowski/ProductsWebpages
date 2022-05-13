@@ -41,6 +41,7 @@ function BindDataToTable(data)
              +"<td>"+data[i].Width+"</td>"
              +"<td>"+data[i].Height+"</td>"
              +"<td>"+data[i].Length+"</td>"
+             +"<td>"+data[i].ShippingPrice+"</td>"
              +"<td>"+ "<button id = '" + data[i].Product_ID + "' onclick = 'deleteItem(id)'> Delete"+
              "<button id = '" + data[i].Product_ID + "' onclick = 'ShowHideEdit(id)'> Edit"
              +"</td>"

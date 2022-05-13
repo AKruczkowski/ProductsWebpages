@@ -33,6 +33,7 @@ function GetOrdData() //async     // Get Orders
         var tablerow = "<tr>"
                +  "<td>" + data[i].Order_ID +"</td>"
                +"<td>"+data[i].Address+"</td>"
+               +"<td>"+data[i].TotalPrice + "</td>"
                +"<td>"+ "<button id = '" + data[i].Order_ID + "' onclick = 'ShowHideEdit(id)'> Edit order"
               //  +
               //  "<button id = '" + data[i].Order_ID + "' onclick = 'deleteItem(id)'> Delete"+"</td>"
